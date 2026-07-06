@@ -1,3 +1,4 @@
+// Auto-push test
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { html } from "./lib/html.js";
 import { supabase } from "./supabaseClient.js";
