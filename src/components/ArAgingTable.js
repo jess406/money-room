@@ -3,6 +3,7 @@ import { html } from "../lib/html.js";
 import Card from "./Card.js";
 import Badge from "./Badge.js";
 import { formatCurrency, formatDate } from "../lib/format.js";
+import { arAgingBucket, AR_AGING_BADGE_LABEL } from "../lib/arAging.js";
 
 export default function ArAgingTable({ invoices, loading }) {
   return html`
@@ -27,7 +28,7 @@ export default function ArAgingTable({ invoices, loading }) {
                 <td style=${{ padding: "10px 12px" }}>${formatCurrency(inv.amount)}</td>
                 <td style=${{ padding: "10px 12px" }}>${formatDate(inv.due_date)}</td>
                 <td style=${{ padding: "10px 12px" }}>${inv.days_out}</td>
-                <td style=${{ padding: "10px 12px" }}><${Badge} status=${inv.status} /></td>
+                <td style=${{ padding: "10px 12px" }}><${Badge} status=${AR_AGING_BADGE_LABEL[arAgingBucket(inv.days_out)]} /></td>
               </tr>
             `)}
             ${!loading && invoices.length === 0 && html`

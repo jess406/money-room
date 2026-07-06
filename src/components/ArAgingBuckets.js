@@ -2,14 +2,7 @@ import React, { useMemo } from "react";
 import { html } from "../lib/html.js";
 import Card from "./Card.js";
 import { formatCurrency } from "../lib/format.js";
-
-function bucketFor(daysOut, status) {
-  const base = daysOut <= 30 ? "current" : daysOut <= 60 ? "aging" : "overdue";
-  // Status is the source of truth: an invoice marked Overdue can never
-  // land in Current, even if its days_out hasn't crossed 31 yet.
-  if (status === "Overdue" && base === "current") return "aging";
-  return base;
-}
+import { arAgingBucket } from "../lib/arAging.js";
 
 export default function ArAgingBuckets({ invoices }) {
   const buckets = useMemo(() => {
@@ -19,7 +12,7 @@ export default function ArAgingBuckets({ invoices }) {
       overdue: { count: 0, total: 0 },
     };
     for (const inv of invoices) {
-      const key = bucketFor(Number(inv.days_out) || 0, inv.status);
+      const key = arAgingBucket(inv.days_out);
       result[key].count += 1;
       result[key].total += Number(inv.amount) || 0;
     }
