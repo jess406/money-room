@@ -1,6 +1,7 @@
 import React from "react";
 import { html } from "../lib/html.js";
 import Card from "./Card.js";
+import Badge from "./Badge.js";
 import { formatCurrency, formatDate } from "../lib/format.js";
 
 export default function WeeklyForecastTable({ data }) {
