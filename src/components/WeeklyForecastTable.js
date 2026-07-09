@@ -31,7 +31,7 @@ export default function WeeklyForecastTable({ data }) {
                 <td style=${{ padding: "10px 12px" }}>${formatCurrency(row.cash_out)}</td>
                 <td style=${{ padding: "10px 12px" }}>${formatCurrency(row.ending_cash)}</td>
                 <td style=${{ padding: "10px 12px" }}>${row.runway_days}</td>
-                <td style=${{ padding: "10px 12px" }}>${row.alert_status}</td>
+                <td style=${{ padding: "10px 12px" }}><${Badge} status=${row.alert_status} /></td>
               </tr>
             `)}
             ${data.length === 0 && html`
