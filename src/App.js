@@ -22,6 +22,7 @@ export default function App() {
   const [cashForecast, setCashForecast] = useState([]);
   const [error, setError] = useState(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
+  const [forecastPhase, setForecastPhase] = useState("current");
 
   // Load monthly_summary (drives dropdown + trend charts) and the
   // month-independent 13-week cash forecast once on mount.
