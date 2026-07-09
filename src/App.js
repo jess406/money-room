@@ -139,7 +139,11 @@ export default function App() {
     const min = Math.min(...allEndingCash, CASH_THRESHOLD);
     const max = Math.max(...allEndingCash, CASH_THRESHOLD);
     const padding = (max - min) * 0.08;
-    return [Math.floor(min - padding), Math.ceil(max + padding)];
+    const STEP = 10000;
+    return [
+      Math.floor((min - padding) / STEP) * STEP,
+      Math.ceil((max + padding) / STEP) * STEP,
+    ];
   }, [cashForecast, forecastArInvoices, forecastApBills]);
 
   const handleMonthChange = useCallback((label) => {
