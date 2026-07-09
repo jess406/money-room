@@ -136,7 +136,7 @@ export default function App() {
     );
     if (allEndingCash.length === 0) return undefined;
 
-    const min = Math.min(...allEndingCash, CASH_THRESHOLD, 0);
+    const min = Math.min(...allEndingCash, CASH_THRESHOLD);
     const max = Math.max(...allEndingCash, CASH_THRESHOLD);
     const padding = (max - min) * 0.08;
     return [Math.floor(min - padding), Math.ceil(max + padding)];
