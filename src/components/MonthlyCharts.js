@@ -27,12 +27,18 @@ const tooltipFormatter = (value) => formatCurrency(value);
 const yTickFormatter = (v) => `$${v / 1000}k`;
 
 export default function MonthlyCharts({ data }) {
+  // Recharts' internal scale caching can get stuck if a chart first mounts
+  // with an empty dataset (before the Supabase fetch resolves) and later
+  // receives real data via a prop update, producing degenerate off-canvas
+  // coordinates. Keying on the dataset identity forces a clean remount.
+  const chartKey = data.length > 0 ? data.map((row) => row.month_label).join(",") : "empty";
+
   return html`
     <div style=${{ width: "100%", display: "flex", gap: 20, flexWrap: "wrap" }}>
       <${Card} title="Revenue vs Expenses" style=${{ flex: "1 1 320px", minWidth: 320 }}>
         <div style=${{ width: "100%", height: 260 }}>
           <${ResponsiveContainer} width="100%" height="100%">
-            <${BarChart} data=${data} margin=${{ top: 4, right: 8, left: 8, bottom: 0 }}>
+            <${BarChart} key=${chartKey} data=${data} margin=${{ top: 4, right: 8, left: 8, bottom: 0 }}>
               <${CartesianGrid} stroke=${GRID_COLOR} vertical=${false} />
               <${XAxis} dataKey="month_label" stroke=${AXIS_COLOR} fontSize=${12} />
               <${YAxis} stroke=${AXIS_COLOR} fontSize=${12} tickFormatter=${yTickFormatter} />
