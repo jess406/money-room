@@ -180,7 +180,7 @@ export default function App() {
           <${PhaseToggle} value=${forecastPhase} onChange=${setForecastPhase} />
         </div>
 
-        <${CashFlowChart} data=${phaseForecast} />
+        <${CashFlowChart} data=${phaseForecast} yDomain=${cashFlowYDomain} />
 
         <${WeeklyForecastTable} data=${phaseForecast} />
       </main>
