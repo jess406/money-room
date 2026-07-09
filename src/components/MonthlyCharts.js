@@ -54,7 +54,7 @@ export default function MonthlyCharts({ data }) {
       <${Card} title="Net Profit Trend" style=${{ flex: "1 1 320px", minWidth: 320 }}>
         <div style=${{ width: "100%", height: 260 }}>
           <${ResponsiveContainer} width="100%" height="100%">
-            <${LineChart} data=${data} margin=${{ top: 4, right: 8, left: 8, bottom: 0 }}>
+            <${LineChart} key=${chartKey} data=${data} margin=${{ top: 4, right: 8, left: 8, bottom: 0 }}>
               <${CartesianGrid} stroke=${GRID_COLOR} vertical=${false} />
               <${XAxis} dataKey="month_label" stroke=${AXIS_COLOR} fontSize=${12} />
               <${YAxis} stroke=${AXIS_COLOR} fontSize=${12} tickFormatter=${yTickFormatter} />
