@@ -21,6 +21,8 @@ export default function App() {
   const [arInvoices, setArInvoices] = useState([]);
   const [apBills, setApBills] = useState([]);
   const [cashForecast, setCashForecast] = useState([]);
+  const [forecastArInvoices, setForecastArInvoices] = useState([]);
+  const [forecastApBills, setForecastApBills] = useState([]);
   const [error, setError] = useState(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [forecastPhase, setForecastPhase] = useState("current");
