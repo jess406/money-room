@@ -163,9 +163,9 @@ export default function App() {
           <${PhaseToggle} value=${forecastPhase} onChange=${setForecastPhase} />
         </div>
 
-        <${CashFlowChart} data=${cashForecast} />
+        <${CashFlowChart} data=${phaseForecast} />
 
-        <${WeeklyForecastTable} data=${cashForecast} />
+        <${WeeklyForecastTable} data=${phaseForecast} />
       </main>
     </div>
   `;
