@@ -20,7 +20,7 @@ const valueFormatter = (value) => formatCurrency(value);
 const yTickFormatter = (v) => `$${v / 1000}k`;
 const xTickFormatter = (v) => `Wk ${v}`;
 
-export default function CashFlowChart({ data }) {
+export default function CashFlowChart({ data, yDomain }) {
   return html`
     <${Card} title="13-Week Cash Flow">
       <div style=${{ width: "100%", height: 300 }}>
@@ -28,7 +28,7 @@ export default function CashFlowChart({ data }) {
           <${LineChart} data=${data} margin=${{ top: 4, right: 8, left: 8, bottom: 0 }}>
             <${CartesianGrid} stroke="#2c2c2c" vertical=${false} />
             <${XAxis} dataKey="week_number" stroke="#b3a08f" fontSize=${12} tickFormatter=${xTickFormatter} />
-            <${YAxis} stroke="#b3a08f" fontSize=${12} tickFormatter=${yTickFormatter} />
+            <${YAxis} stroke="#b3a08f" fontSize=${12} tickFormatter=${yTickFormatter} domain=${yDomain || ["auto", "auto"]} />
             <${Tooltip}
               contentStyle=${tooltipContentStyle}
               labelStyle=${tooltipLabelStyle}
