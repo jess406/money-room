@@ -13,6 +13,7 @@ import BillsDueTable from "./components/BillsDueTable.js";
 import CashFlowChart from "./components/CashFlowChart.js";
 import WeeklyForecastTable from "./components/WeeklyForecastTable.js";
 import PhaseToggle from "./components/PhaseToggle.js";
+import { computeForecastPhase } from "./lib/forecastPhases.js";
 
 export default function App() {
   const [monthlySummaries, setMonthlySummaries] = useState([]);
