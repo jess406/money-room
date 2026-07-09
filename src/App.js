@@ -28,14 +28,20 @@ export default function App() {
   const [forecastPhase, setForecastPhase] = useState("current");
 
   // Load monthly_summary (drives dropdown + trend charts) and the
-  // month-independent 13-week cash forecast once on mount.
+  // month-independent 13-week cash forecast once on mount. Also load ALL
+  // AR invoices and AP bills here (unfiltered by month_label) -- the
+  // Aggressive/Conservative forecast re-buckets by due_date across the
+  // full 13-week window, which spans multiple month_labels, so it can't
+  // reuse the month-scoped arInvoices/apBills state below.
   useEffect(() => {
     let cancelled = false;
 
     async function loadInitial() {
-      const [summaryRes, forecastRes] = await Promise.all([
+      const [summaryRes, forecastRes, allArRes, allApRes] = await Promise.all([
         supabase.from("monthly_summary").select("*"),
         supabase.from("cash_forecast").select("*").order("week_number", { ascending: true }),
+        supabase.from("ar_invoices").select("*"),
+        supabase.from("ap_bills").select("*"),
       ]);
 
       if (cancelled) return;
@@ -48,10 +54,20 @@ export default function App() {
         setError(forecastRes.error.message);
         return;
       }
+      if (allArRes.error) {
+        setError(allArRes.error.message);
+        return;
+      }
+      if (allApRes.error) {
+        setError(allApRes.error.message);
+        return;
+      }
 
       const sorted = sortByMonthLabel(summaryRes.data || []);
       setMonthlySummaries(sorted);
       setCashForecast(forecastRes.data || []);
+      setForecastArInvoices(allArRes.data || []);
+      setForecastApBills(allApRes.data || []);
 
       if (sorted.length > 0) {
         const now = new Date();
