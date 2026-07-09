@@ -120,6 +120,11 @@ export default function App() {
     [arInvoices]
   );
 
+  const phaseForecast = useMemo(
+    () => computeForecastPhase(cashForecast, forecastArInvoices, forecastApBills, forecastPhase),
+    [cashForecast, forecastArInvoices, forecastApBills, forecastPhase]
+  );
+
   const handleMonthChange = useCallback((label) => {
     setSelectedMonth(label);
   }, []);
