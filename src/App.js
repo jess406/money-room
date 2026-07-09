@@ -132,6 +132,13 @@ export default function App() {
 
         <${BillsDueTable} bills=${apBills} loading=${loadingMonth} />
 
+        <div style=${{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <h2 style=${{ margin: 0, fontSize: 16, fontWeight: 700, color: "#f7f5f1" }}>
+            13-Week Cash Flow Forecast
+          </h2>
+          <${PhaseToggle} value=${forecastPhase} onChange=${setForecastPhase} />
+        </div>
+
         <${CashFlowChart} data=${cashForecast} />
 
         <${WeeklyForecastTable} data=${cashForecast} />
