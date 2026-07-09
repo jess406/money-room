@@ -21,11 +21,18 @@ const yTickFormatter = (v) => `$${v / 1000}k`;
 const xTickFormatter = (v) => `Wk ${v}`;
 
 export default function CashFlowChart({ data, yDomain }) {
+  // Recharts' internal scale caching can get stuck if LineChart first mounts
+  // with an empty dataset (before the Supabase fetch resolves) and later
+  // receives real data via a prop update, producing degenerate off-canvas
+  // coordinates. Keying on the dataset identity forces a clean remount
+  // whenever it changes (empty -> populated, or one phase -> another).
+  const chartKey = data.length > 0 ? data.map((row) => row.id).join(",") : "empty";
+
   return html`
     <${Card} title="13-Week Cash Flow">
       <div style=${{ width: "100%", height: 300 }}>
         <${ResponsiveContainer} width="100%" height="100%">
-          <${LineChart} data=${data} margin=${{ top: 4, right: 8, left: 8, bottom: 0 }}>
+          <${LineChart} key=${chartKey} data=${data} margin=${{ top: 4, right: 8, left: 8, bottom: 0 }}>
             <${CartesianGrid} stroke="#2c2c2c" vertical=${false} />
             <${XAxis} dataKey="week_number" stroke="#b3a08f" fontSize=${12} tickFormatter=${xTickFormatter} />
             <${YAxis} stroke="#b3a08f" fontSize=${12} tickFormatter=${yTickFormatter} domain=${yDomain || ["auto", "auto"]} />
