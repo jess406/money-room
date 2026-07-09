@@ -8,6 +8,9 @@ const COLOR_MAP = {
   due: { bg: "#4a3f1a", fg: "#f2c94c" },
   scheduled: { bg: "#1a2a3f", fg: "#7fb3f2" },
   paid: { bg: "#1f3a24", fg: "#7fd48a" },
+  healthy: { bg: "#1f3a24", fg: "#7fd48a" },
+  watch: { bg: "#4a3f1a", fg: "#f2c94c" },
+  critical: { bg: "#4a1f1f", fg: "#f28b82" },
 };
 
 export default function Badge({ status }) {
