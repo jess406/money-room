@@ -125,6 +125,23 @@ export default function App() {
     [cashForecast, forecastArInvoices, forecastApBills, forecastPhase]
   );
 
+  // Shared y-axis domain across all three phases -- computed from all of
+  // them regardless of which tab is selected, so switching to Conservative
+  // doesn't auto-rescale the chart to its own smaller numbers and hide how
+  // much worse it is relative to Current/Aggressive.
+  const cashFlowYDomain = useMemo(() => {
+    const CASH_THRESHOLD = 150000;
+    const allEndingCash = ["current", "aggressive", "conservative"].flatMap((phase) =>
+      computeForecastPhase(cashForecast, forecastArInvoices, forecastApBills, phase).map((w) => w.ending_cash)
+    );
+    if (allEndingCash.length === 0) return undefined;
+
+    const min = Math.min(...allEndingCash, CASH_THRESHOLD, 0);
+    const max = Math.max(...allEndingCash, CASH_THRESHOLD);
+    const padding = (max - min) * 0.08;
+    return [Math.floor(min - padding), Math.ceil(max + padding)];
+  }, [cashForecast, forecastArInvoices, forecastApBills]);
+
   const handleMonthChange = useCallback((label) => {
     setSelectedMonth(label);
   }, []);
